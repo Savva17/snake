@@ -8,6 +8,7 @@ button {
   }
 
 .body {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -17,12 +18,35 @@ button {
 
 }
 .container {
-   
     display: flex;
     background-color: rgb(221, 219, 219);
-    
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    border-radius:10px;
+    -webkit-border-radius:10px ;
+    -moz-border-radius:10px ;
+    -ms-border-radius:10px ;
+    -o-border-radius:10px ;
 }
 
+.game__over{
+    padding: 10px;
+    position: absolute;
+    background-color: rgb(0, 0, 0);
+    border-radius: 3px;
+    color: white;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size:30px;
+    opacity: 0;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+}
+.active{
+    opacity: 1;
+}
 .area {
     display: grid;
     justify-items: center;
@@ -33,6 +57,11 @@ button {
     -moz-border-radius: 2px;
     -ms-border-radius: 2px;
     -o-border-radius: 2px;
+    position: relative;
+
+}
+.end{
+    opacity: 0;
 }
 .square{
     margin: 5px;
@@ -48,7 +77,7 @@ button {
 }
 .snake{
     margin: 0px;
-    background-color: rgb(154, 156, 4);
+    background-color: #357070;
     border-radius: 0%;
     -webkit-border-radius: 0%;
     -moz-border-radius: 0%;
@@ -62,13 +91,13 @@ button {
 
 .apple{
     margin: 0px;
-    background-color: rgb(0, 255, 76);
+    background-color:#39c915;
     width: 20px;
     height: 20px;
 
 }
 .snaketail{
-    background-color: rgb(251, 255, 0);
+    background-color:#5FCACA;
     margin: 0px;
     border-radius: 0%;
     -webkit-border-radius: 0%;
@@ -88,15 +117,14 @@ button {
 .box{
     display: flex;
     align-self: center;
+    
     gap: 20px;
 }
 .result{
+    padding: 5px;
     display: flex;
     flex-direction: column;
-    background-color: gray;
     display: flex;
-    align-items: center;
-    height: 50px;
     border-radius: 5px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
@@ -104,33 +132,29 @@ button {
     -o-border-radius: 5px;
 }
 
-.result__title{
+
+.result__score,
+.result__best,
+.result__speed{
     margin: 5px;
     text-transform: uppercase;
-    color: white;
-    font-size: 10px;
+    color: rgb(0, 0, 0);
+    font-size: 12px;
     
 }
-.result__score,
-.result__best{
-    margin: 0;
-    text-transform: uppercase;
-    color: white;
-    font-size: 15px;
-}
 .reset{
-    background-color: gray;
-    color: white;
     text-align: center;
     font-size: 10px;
     text-transform: uppercase;
     padding: 5px;
     height: 50px;
-    border-radius: 5px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    -ms-border-radius: 5px;
-    -o-border-radius: 5px;
+    border: 1px solid black;
+    background-color: gray;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
     transition: 0.2s;
     -webkit-transition: 0.2s;
     -moz-transition: 0.2s;
@@ -141,6 +165,7 @@ button {
     box-shadow: 1px 1px 5px black;
 }
 .control{
+    
     display: grid;
     align-items: center;
     justify-content: center;
@@ -153,11 +178,24 @@ button {
     height: 200px;
 }
 .button{
-    margin: 0;
     width: 100px;
     height: 50px;
     border: 1px solid black;
-    background-color: white;
+    background-color: gray;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    text-transform: uppercase;
+    transition: 0.2s;
+    -webkit-transition: 0.2s;
+    -moz-transition: 0.2s;
+    -ms-transition: 0.2s;
+    -o-transition: 0.2s;
+}
+.button:hover{
+    box-shadow: 1px 1px 5px black;
 }
 .up{
     grid-area: a;
@@ -174,6 +212,4 @@ button {
 .down{
     grid-area: d;
     justify-self: center;
-
-
 }

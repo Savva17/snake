@@ -37,10 +37,12 @@ class Field {
         // отрисовка игрового поля
         this.container = document.querySelector('.container');
         this.amountSquare = 15;// размер поля
-        this.heigth = 1;
-        this.width = 1;
+        this.heigth = 1;//начальные координаты поля
+        this.width = 1;// начальные координаты поля
         this.container.innerHTML += `<div class="area" style="grid-template:auto/repeat(${this.amountSquare}, 1fr);"></div>`
         this.area = document.querySelector('.area');
+        
+        // цикл отрисовки поля
         for (let i = 1; i <= this.amountSquare; i++) {
 
             for (this.width = 1; this.width <= this.amountSquare; this.width++) {
@@ -64,8 +66,9 @@ class Snake {
         this.nextX;//координаты головы
         this.auto; // интервал
         this.time = 500;// начальная скорость змейки
-        this.res = 0;
-        this.route = 'up';
+        this.res = 0;//счетчик очков для увеличения скорости змейки
+        this.speed = 1; // начальная скорость игры
+        this.route = 'up';// начальное направление змейки
         document.querySelector(".x" + 5 + ".y" + 5).classList.add("snake");// начальные координаты змейки
         document.querySelector(".x" + 5 + ".y" + 6).classList.add("snaketail");// начальные координаты тела
 
@@ -82,7 +85,11 @@ class Snake {
         for (this.a = 0; this.a < this.arrYX.length; this.a++) {
             // если координаты головы совпадут с координатами тела змейки
             if (this.nextY === this.arrYX[this.a][0] && this.nextX === this.arrYX[this.a][1]) {
+                // останавливается движение и удаляются стили змейки
                 this.route = 0;
+                document.querySelector('.area').classList.add("end")
+                document.querySelector('.game__over').classList.add("active")
+
                 document.querySelector(".snake").classList.remove("snake");
                 clearInterval(this.auto)
                 for (this.i = 0; this.i < 1 + main.score._score; this.i++) {
@@ -97,12 +104,18 @@ class Snake {
     update() {
         // логика обновления змейки
         // условия увеличения скорости змейки
-        if (this.res === 5) {
+        if (this.res === 8 && this.time>250) {
             this.time -= 50;
             this.res = 0;
+            this.speed++;
+            console.log(1)
+        } else if(this.res === 10 && this.time>100){
+            this.time -= 25;
+            this.res = 0;
+            this.speed++;
+
         }
     }
-
     draw() {
 
         // логика отрисовки змейки    
@@ -262,14 +275,18 @@ class Score {
     constructor(score) {
         //инициализировать начальное колличество очков
         this._score = score;
+        // текущий результат
         this.score = document.querySelector('.result__score')
+        // лучший результат
         this.bestScore = document.querySelector('.result__best')
+        // скорость игры
+        this.speed = document.querySelector('.result__speed')
     }
     draw() {
         //отрисовка блока с очками
-        this.score.textContent = this._score;
-        this.bestScore.textContent = localStorage.getItem('score');
-
+        this.score.textContent = `Текущий Счет: ` + this._score;
+        this.bestScore.textContent = `Лучший Счет: ` + localStorage.getItem('score');
+        this.speed.textContent = `Скорость Игры: ` + main.snake.speed;
     }
     increase() {
         //увеличивать количество очков
@@ -300,6 +317,8 @@ let reset = document.querySelector('.reset')
 reset.addEventListener('click', function () {
     location.reload();
 })
+
+// кнопки на экране для мобильной версии
 let buttonUp = document.querySelector('.up');
 let buttonDown = document.querySelector('.down');
 let buttonRight = document.querySelector('.right');
