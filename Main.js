@@ -89,7 +89,7 @@ class Snake {
                 this.route = 0;
                 document.querySelector('.area').classList.add("end")
                 document.querySelector('.game__over').classList.add("active")
-
+                document.querySelector(".reset").classList.remove("end");
                 document.querySelector(".snake").classList.remove("snake");
                 clearInterval(this.auto)
                 for (this.i = 0; this.i < 1 + main.score._score; this.i++) {
