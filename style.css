@@ -140,3 +140,40 @@ button {
 .reset:hover{
     box-shadow: 1px 1px 5px black;
 }
+.control{
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    grid-template-areas: 
+    'a a'
+    'b c'
+    'd d';
+    gap: 10px;
+    width: 100vw;
+    height: 200px;
+}
+.button{
+    margin: 0;
+    width: 100px;
+    height: 50px;
+    border: 1px solid black;
+    background-color: white;
+}
+.up{
+    grid-area: a;
+    justify-self: center;
+}
+.left{
+    grid-area: b;
+
+}
+.right{
+    grid-area: c;
+
+}
+.down{
+    grid-area: d;
+    justify-self: center;
+
+
+}
