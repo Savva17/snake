@@ -65,7 +65,7 @@ class Snake {
         this.auto; // интервал
         this.time = 500;// начальная скорость змейки
         this.res = 0;
-
+        this.route = 'up';
         document.querySelector(".x" + 5 + ".y" + 5).classList.add("snake");// начальные координаты змейки
         document.querySelector(".x" + 5 + ".y" + 6).classList.add("snaketail");// начальные координаты тела
 
@@ -165,7 +165,7 @@ class Snake {
     control(e, a) {
         // логика управления змейкой
         // обработка кнопок на клавиатуре
-        this.route;
+        
 
 
         if (e.code === 'ArrowUp' && this.route !== 'down') {
