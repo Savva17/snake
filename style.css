@@ -43,10 +43,19 @@ button {
     -moz-border-radius: 3px;
     -ms-border-radius: 3px;
     -o-border-radius: 3px;
-}
+    }
+
 .active{
     z-index: 3;
     opacity: 1;
+    animation: colorBg 1s infinite;
+    -webkit-animation: colorBg 1s infinite;
+}
+@keyframes colorBg {
+    50%{
+        background-color: rgb(124, 20, 20);
+    }
+    
 }
 .area {
     display: grid;
@@ -59,6 +68,8 @@ button {
     -ms-border-radius: 2px;
     -o-border-radius: 2px;
     position: relative;
+    background: linear-gradient(90deg, rgba(136, 153, 58, 0.5) 1%, rgba(33,158,184,.5) 100%);
+
 }
 .area_clean{
 }
@@ -150,8 +161,9 @@ button {
     text-transform: uppercase;
     padding: 5px;
     height: 50px;
-    border: 1px solid black;
-    background-color: gray;
+    color: white;
+    border: 1px solid white;
+    background: linear-gradient(90deg, rgba(136, 153, 58, 0.5) 1%, rgba(33,158,184,.5) 100%);
     border-radius: 10px;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
@@ -185,8 +197,9 @@ button {
 .button{
     width: 100px;
     height: 50px;
-    border: 1px solid black;
-    background-color: gray;
+    border: 1px solid white;
+    color: white;
+    background: linear-gradient(90deg, rgba(136, 153, 58, 0.5) 1%, rgba(33,158,184,.5) 100%);
     border-radius: 10px;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
