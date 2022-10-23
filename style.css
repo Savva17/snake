@@ -45,6 +45,7 @@ button {
     -o-border-radius: 3px;
 }
 .active{
+    z-index: 3;
     opacity: 1;
 }
 .area {
@@ -58,10 +59,8 @@ button {
     -ms-border-radius: 2px;
     -o-border-radius: 2px;
     position: relative;
-
 }
-.end{
-    opacity: 0;
+.area_clean{
 }
 .square{
     margin: 5px;
@@ -106,8 +105,8 @@ button {
     -o-border-radius: 0%;
     width: 20px;
     height: 20px;
-
 }
+
 
 .block{
     display: flex;
@@ -116,8 +115,10 @@ button {
 }
 .box{
     display: flex;
-    align-self: center;
-    
+    align-items: center;
+    justify-content: center;
+    width: 150px;
+    height: 80px;
     gap: 20px;
 }
 .result{
@@ -143,6 +144,7 @@ button {
     
 }
 .reset{
+    display: none;
     text-align: center;
     font-size: 10px;
     text-transform: uppercase;
@@ -160,6 +162,9 @@ button {
     -moz-transition: 0.2s;
     -ms-transition: 0.2s;
     -o-transition: 0.2s;
+}
+.end{
+    display: block;
 }
 .reset:hover{
     box-shadow: 1px 1px 5px black;

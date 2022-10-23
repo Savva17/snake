@@ -1,33 +1,10 @@
 
-
-
-
-// import Apple from "./Apple.js";
-// import Field from "./Field.js";
-// import Score from "./Score.js";
-// import Snake from "./Snake.js";
-
-
-
-
 class Main {
     constructor() {
         this.field = new Field();
         this.snake = new Snake();
         this.apple = new Apple();
         this.score = new Score(0);
-
-
-    }
-
-    update() {
-        //логика обновления игры
-    }
-
-    draw() {
-        //логика отрисовки
-
-
     }
 }
 
@@ -39,6 +16,7 @@ class Field {
         this.amountSquare = 15;// размер поля
         this.heigth = 1;//начальные координаты поля
         this.width = 1;// начальные координаты поля
+
         this.container.innerHTML += `<div class="area" style="grid-template:auto/repeat(${this.amountSquare}, 1fr);"></div>`
         this.area = document.querySelector('.area');
         
@@ -62,11 +40,12 @@ class Snake {
         // инициялизация змейки
         // например размер змейки, цвет, начальное позиционирование
         // и другие параметры
+        this.end = false; //конец игры при значение true
         this.nextY;//координаты головы
         this.nextX;//координаты головы
         this.auto; // интервал
         this.time = 500;// начальная скорость змейки
-        this.res = 0;//счетчик очков для увеличения скорости змейки
+        this.speedIncrease = 0;//счетчик очков для увеличения скорости змейки
         this.speed = 1; // начальная скорость игры
         this.route = 'up';// начальное направление змейки
         document.querySelector(".x" + 5 + ".y" + 5).classList.add("snake");// начальные координаты змейки
@@ -85,33 +64,34 @@ class Snake {
         for (this.a = 0; this.a < this.arrYX.length; this.a++) {
             // если координаты головы совпадут с координатами тела змейки
             if (this.nextY === this.arrYX[this.a][0] && this.nextX === this.arrYX[this.a][1]) {
-                // останавливается движение и удаляются стили змейки
+                
+                //отключает функцию движения
+                this.end = true;
+                
+                // останавливается движение змейки
                 this.route = 0;
-                document.querySelector('.area').classList.add("end")
+                //скрывает поле, табличка конец игры и появляется кнопка насчать заново
+                document.querySelector('.area').classList.add("area_clean")
                 document.querySelector('.game__over').classList.add("active")
-                document.querySelector(".reset").classList.remove("end");
-                document.querySelector(".snake").classList.remove("snake");
-                clearInterval(this.auto)
-                for (this.i = 0; this.i < 1 + main.score._score; this.i++) {
+                document.querySelector(".reset").classList.add("end");
 
-                    document.querySelector(".snaketail").classList.remove("snaketail");
-                }
-                ;
+                clearInterval(this.auto)
+               
+                
             }
         }
     }
 
     update() {
         // логика обновления змейки
-        // условия увеличения скорости змейки
-        if (this.res === 8 && this.time>250) {
+        // условия увеличения скорости змейки this.speedIncrease при наборе 5 очков скорость увеличивается
+        if (this.speedIncrease === 5 && this.time>250) {
             this.time -= 50;
-            this.res = 0;
+            this.speedIncrease = 0;
             this.speed++;
-            console.log(1)
-        } else if(this.res === 10 && this.time>100){
+        } else if(this.speedIncrease === 8 && this.time>100){
             this.time -= 25;
-            this.res = 0;
+            this.speedIncrease = 0;
             this.speed++;
 
         }
@@ -150,10 +130,10 @@ class Snake {
                 main.apple.getPosition(this.nextY, this.nextX)
             }
             this.death()
-            // удаление головы змейки с поля
+            // удаление головы змейки с поля при движении
             document.querySelector(".snake").classList.remove("snake");
 
-            // добавление змейки на поле по кординатам
+            // добавление головы змейки на поле по кординатам
             document.querySelector(".x" + this.nextX + ".y" + this.nextY).classList.add("snake");
 
             // добавление координат головы в массив и удаление предыдущего хвоста на одну клетку
@@ -180,33 +160,33 @@ class Snake {
         // обработка кнопок на клавиатуре
         
 
-
-        if (e.code === 'ArrowUp' && this.route !== 'down') {
-            this.route = 'up'
-            clearInterval(this.auto)
-            this.draw(this.route)
-
-
-        } else if (e.code === 'ArrowDown' && this.route !== 'up') {
-            this.route = 'down'
-            clearInterval(this.auto)
-            this.draw(this.route)
+        if(this.end === false){
+            if (e.code === 'ArrowUp' && this.route !== 'down') {
+                this.route = 'up'
+                clearInterval(this.auto)
+                this.draw(this.route)
 
 
-        } else if (e.code === 'ArrowRight' && this.route !== 'left') {
-            this.route = 'right'
-            clearInterval(this.auto)
-            this.draw(this.route)
+            } else if (e.code === 'ArrowDown' && this.route !== 'up') {
+                this.route = 'down'
+                clearInterval(this.auto)
+                this.draw(this.route)
 
 
-        } else if (e.code === 'ArrowLeft' && this.route !== 'right') {
-            this.route = 'left'
-            clearInterval(this.auto)
-            this.draw(this.route)
+            } else if (e.code === 'ArrowRight' && this.route !== 'left') {
+                this.route = 'right'
+                clearInterval(this.auto)
+                this.draw(this.route)
 
+
+            } else if (e.code === 'ArrowLeft' && this.route !== 'right') {
+                this.route = 'left'
+                clearInterval(this.auto)
+                this.draw(this.route)
+
+            }
         }
     }
-
 
 }
 
@@ -240,8 +220,7 @@ class Apple {
             for (this.i = 0; this.i < main.snake.arrYX.length; this.i++) {
 
                 if (main.snake.arrYX[this.i][0] !== this.arrApple[0] && main.snake.arrYX[this.i][1] !== this.arrApple[1] && main.snake.nextY !== this.arrApple[0] && main.snake.nextX !== this.arrApple[1]) {
-                    console.log(main.snake.arrYX[this.i][0], main.snake.arrYX[this.i][1])
-                    console.log(this.arrApple[0], this.arrApple[1])
+                    
                     document.querySelector('.apple').classList.remove('apple')
                     return document.querySelector('.x' + this.appleX + '.y' + this.appleY).classList.add('apple');
 
@@ -258,7 +237,7 @@ class Apple {
 
         //получение новой позиции яблока на поле
         if (b == this.appleX && a == this.appleY) {
-            main.snake.res++
+            main.snake.speedIncrease++
             main.snake.update()
             // вызов функии новых координат яблока
             this.draw()
@@ -285,7 +264,14 @@ class Score {
     draw() {
         //отрисовка блока с очками
         this.score.textContent = `Текущий Счет: ` + this._score;
-        this.bestScore.textContent = `Лучший Счет: ` + localStorage.getItem('score');
+
+        //если в localStorage нет данных то в поле лучший результат прописывается ноль
+        if (localStorage.getItem('score') === null) {
+            this.bestScore.textContent = `Лучший Счет: ` + 0;
+        } else{
+            this.bestScore.textContent = `Лучший Счет: ` + localStorage.getItem('score');
+        }
+        //отображение скорости игры
         this.speed.textContent = `Скорость Игры: ` + main.snake.speed;
     }
     increase() {
@@ -300,7 +286,6 @@ class Score {
     reset() {
         //сброс текущего результата при смерти
         this._score = 0;
-        console.log(localStorage.getItem('score'))
         this.bestScore += +localStorage.getItem('score')
         this.draw();
     }
@@ -309,10 +294,12 @@ let main = new Main();
 main.score.draw()
 main.apple.draw()
 
-
+//стрелки на клавиатуре
 document.addEventListener('keydown', function (e) {
     main.snake.control(e)
 })
+
+// кнопка начать аново
 let reset = document.querySelector('.reset')
 reset.addEventListener('click', function () {
     location.reload();
@@ -341,4 +328,3 @@ buttonLeft.addEventListener('click', function (e) {
     main.snake.control(e)
 })
 
-// export default Main;
