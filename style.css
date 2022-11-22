@@ -111,9 +111,7 @@ button {
 }
 .apple{
     margin: 0px;
-    background-image: url(./Apple.svg);
-    background-position: center;
-    background-size: cover;
+    background:green:
     width: 20px;
     height: 20px;
     border-radius: 50%;
