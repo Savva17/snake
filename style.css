@@ -44,12 +44,29 @@ button {
     -ms-border-radius: 3px;
     -o-border-radius: 3px;
     }
-
+    .start__game{
+    padding: 10px;
+    position: absolute;
+    background-color: rgb(0, 0, 0);
+    border-radius: 3px;
+    color: white;
+    text-align: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size:20px;
+    opacity: 1;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+    }
 .active{
     z-index: 3;
     opacity: 1;
     animation: colorBg 1s infinite;
     -webkit-animation: colorBg 1s infinite;
+}
+.active__game{
+    opacity: 0;
 }
 @keyframes colorBg {
     50%{
@@ -68,56 +85,44 @@ button {
     -ms-border-radius: 2px;
     -o-border-radius: 2px;
     position: relative;
-    background: linear-gradient(90deg, rgba(136, 153, 58, 0.5) 1%, rgba(33,158,184,.5) 100%);
+    background-color: rgba(58, 156, 58, 0.596);
 
 }
 .area_clean{
 }
 .square{
-    margin: 5px;
-    width: 10px;
-    height: 10px;
+    width: 20px;
+    height: 20px;
+    background-color: rgba(0, 0, 0, 0.021);
+}
+.snake{
+    margin: 0px;
+    background-color: #000000;
+    width: 20px;
+    height: 20px;
+}
+
+.snaketail{
+    background-color:#00000083;
+    margin: 0px;
+    width: 20px;
+    height: 20px;
+    z-index: 0;
+}
+.apple{
+    margin: 0px;
+    background-image: url(./Apple.svg);
+    background-position: center;
+    background-size: cover;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
-    background-color: rgb(0, 0, 0);
-    border: 1px solid black;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     -ms-border-radius: 50%;
     -o-border-radius: 50%;
+    z-index: 1;
 }
-.snake{
-    margin: 0px;
-    background-color: #357070;
-    border-radius: 0%;
-    -webkit-border-radius: 0%;
-    -moz-border-radius: 0%;
-    -ms-border-radius: 0%;
-    -o-border-radius: 0%;
-    width: 20px;
-    height: 20px;
-}
-
-
-
-.apple{
-    margin: 0px;
-    background-color:#39c915;
-    width: 20px;
-    height: 20px;
-
-}
-.snaketail{
-    background-color:#5FCACA;
-    margin: 0px;
-    border-radius: 0%;
-    -webkit-border-radius: 0%;
-    -moz-border-radius: 0%;
-    -ms-border-radius: 0%;
-    -o-border-radius: 0%;
-    width: 20px;
-    height: 20px;
-}
-
 
 .block{
     display: flex;
@@ -163,7 +168,7 @@ button {
     height: 50px;
     color: white;
     border: 1px solid white;
-    background: linear-gradient(90deg, rgba(136, 153, 58, 0.5) 1%, rgba(33,158,184,.5) 100%);
+    background: linear-gradient(90deg, rgba(145, 145, 145, 0.5) 1%, rgba(0, 0, 0, 0.5) 100%);
     border-radius: 10px;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
@@ -182,7 +187,7 @@ button {
     box-shadow: 1px 1px 5px black;
 }
 .control{
-    
+    margin: 10px;
     display: grid;
     align-items: center;
     justify-content: center;
@@ -199,12 +204,12 @@ button {
     height: 50px;
     border: 1px solid white;
     color: white;
-    background: linear-gradient(90deg, rgba(136, 153, 58, 0.5) 1%, rgba(33,158,184,.5) 100%);
-    border-radius: 10px;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    -ms-border-radius: 10px;
-    -o-border-radius: 10px;
+    background: linear-gradient(90deg, rgba(145, 145, 145, 0.5) 1%, rgba(0, 0, 0, 0.5) 100%);
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
     text-transform: uppercase;
     transition: 0.2s;
     -webkit-transition: 0.2s;

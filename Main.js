@@ -4,16 +4,16 @@ class Main {
         this.field = new Field();
         this.snake = new Snake();
         this.apple = new Apple();
-        this.score = new Score(0);
+        this.score = new Score();
     }
 }
 
 
-class Field {
+class Field { 
     constructor() {
         // отрисовка игрового поля
         this.container = document.querySelector('.container');
-        this.amountSquare = 15;// размер поля
+        this.amountSquare = 20;// размер поля
         this.heigth = 1;//начальные координаты поля
         this.width = 1;// начальные координаты поля
 
@@ -38,7 +38,7 @@ class Field {
 class Snake {
     constructor() {
         // инициялизация змейки
-        // например размер змейки, цвет, начальное позиционирование
+        //  начальное позиционирование
         // и другие параметры
         this.end = false; //конец игры при значение true
         this.nextY;//координаты головы
@@ -48,18 +48,22 @@ class Snake {
         this.speedIncrease = 0;//счетчик очков для увеличения скорости змейки
         this.speed = 1; // начальная скорость игры
         this.route = 'up';// начальное направление змейки
-        document.querySelector(".x" + 5 + ".y" + 5).classList.add("snake");// начальные координаты змейки
-        document.querySelector(".x" + 5 + ".y" + 6).classList.add("snaketail");// начальные координаты тела
+        
+    }
 
+    drawStart() {
+        // начальные координаты змейки
+        document.querySelector(".x" + Math.floor(main.field.amountSquare / 2) + ".y" + Math.floor(main.field.amountSquare / 2)).classList.add("snake");
+        // начальные координаты тела
+        document.querySelector(".x" + Math.floor(main.field.amountSquare / 2) + ".y" + Math.floor((main.field.amountSquare / 2) + 1)).classList.add("snaketail");
 
-        this.arrYX = [[5, 5], [6, 5]]// начальные координаты тела змейки [Y,X]
-
-
-
+        // массив с начальными координатами
+        this.arrYX = [[Math.floor(main.field.amountSquare / 2), Math.floor(main.field.amountSquare / 2)], [Math.floor((main.field.amountSquare / 2) + 1), Math.floor(main.field.amountSquare / 2)]]// начальные координаты тела змейки [Y,X]
     }
 
     death() {
         //логика смерти змейки
+        
 
         for (this.a = 0; this.a < this.arrYX.length; this.a++) {
             // если координаты головы совпадут с координатами тела змейки
@@ -76,7 +80,6 @@ class Snake {
                 document.querySelector(".reset").classList.add("end");
 
                 clearInterval(this.auto)
-               
                 
             }
         }
@@ -85,7 +88,7 @@ class Snake {
     update() {
         // логика обновления змейки
         // условия увеличения скорости змейки this.speedIncrease при наборе 5 очков скорость увеличивается
-        if (this.speedIncrease === 5 && this.time>250) {
+        if (this.speedIncrease === 4 && this.time>250) {
             this.time -= 50;
             this.speedIncrease = 0;
             this.speed++;
@@ -97,7 +100,7 @@ class Snake {
         }
     }
     draw() {
-
+        
         // логика отрисовки змейки    
         this.auto = setInterval(() => {
             if (this.route === 'up') {
@@ -143,10 +146,10 @@ class Snake {
             document.querySelector(".x" + this.arrYX.slice(-1)[0][1] + ".y" + this.arrYX.slice(-1)[0][0]).classList.remove("snaketail");
 
             //  удаление последних координат в массиве. длина массива зависит от сьеденых яблок
-            this.arrYX.splice(1 + main.score._score, 2)
+            this.arrYX.splice(1 + main.score.score, 2)
 
             // цикл прорисовки хвоста змейки
-            for (this.i = 0; this.i < 1 + main.score._score; this.i++) {
+            for (this.i = 0; this.i < 1 + main.score.score; this.i++) {
 
                 document.querySelector(".x" + this.arrYX[this.i][1] + ".y" + this.arrYX[this.i][0]).classList.add("snaketail");
             }
@@ -159,8 +162,9 @@ class Snake {
         // логика управления змейкой
         // обработка кнопок на клавиатуре
         
-
-        if(this.end === false){
+        // если небыло клика на поле то движения змейки не будет
+        if(this.end === false && start !== true){
+            
             if (e.code === 'ArrowUp' && this.route !== 'down') {
                 this.route = 'up'
                 clearInterval(this.auto)
@@ -196,17 +200,24 @@ class Apple {
         this.appleX = 2;// начальные координаты яблока
         this.appleY = 2;// начальные координаты яблока
         this.d = 0;
-        // добавление яблока на поле
-        document.querySelector(".x" + this.appleX + ".y" + this.appleY).classList.add("apple")
+       
+
         this.n = 1;//проверка сколько раз запускается функция
         this.arrApple = [2, 2]; // создание массива координат яблока
     }
-    draw() {
-        //отрисовка яблока
+    appleStart(){
+        // добавление яблока на поле по случайным координатам при запуске игры
         this.appleX = Math.floor(Math.random() * main.field.amountSquare);
         this.appleY = Math.floor(Math.random() * main.field.amountSquare);
 
-        ;
+        document.querySelector(".x" + this.appleX + ".y" + this.appleY).classList.add("apple")
+    }
+
+
+    draw() {
+        // добавление яблока на поле по случайным координатам
+        this.appleX = Math.floor(Math.random() * main.field.amountSquare);
+        this.appleY = Math.floor(Math.random() * main.field.amountSquare);
 
         //добавление координат яблока в массив
         this.arrApple.unshift(this.appleY, this.appleX)
@@ -219,7 +230,8 @@ class Apple {
 
             for (this.i = 0; this.i < main.snake.arrYX.length; this.i++) {
 
-                if (main.snake.arrYX[this.i][0] !== this.arrApple[0] && main.snake.arrYX[this.i][1] !== this.arrApple[1] && main.snake.nextY !== this.arrApple[0] && main.snake.nextX !== this.arrApple[1]) {
+                if (main.snake.arrYX[this.i][0] !== this.arrApple[0] && main.snake.arrYX[this.i][1] !== this.arrApple[1] &&
+                    main.snake.nextY !== this.arrApple[0] && main.snake.nextX !== this.arrApple[1]) {
                     
                     document.querySelector('.apple').classList.remove('apple')
                     return document.querySelector('.x' + this.appleX + '.y' + this.appleY).classList.add('apple');
@@ -233,17 +245,18 @@ class Apple {
 
     }
 
-    getPosition(a, b) {
+    getPosition(snakeHeadY, snakeHeadX) {
 
-        //получение новой позиции яблока на поле
-        if (b == this.appleX && a == this.appleY) {
+        //получение новой позиции яблока на поле, 
+        //если координаты головы равняются координатам змейки
+        if (snakeHeadX == this.appleX && snakeHeadY == this.appleY) {
             main.snake.speedIncrease++
             main.snake.update()
             // вызов функии новых координат яблока
             this.draw()
 
-            // вызов функции подсчет результата
-            main.score.increase()
+            // вызов функции подсчет результата и передача на сколько увеличить счет(1)
+            main.score.increase(1)
 
         }
     }
@@ -251,19 +264,30 @@ class Apple {
 }
 
 class Score {
-    constructor(score) {
+    constructor() {
         //инициализировать начальное колличество очков
-        this._score = score;
+        
         // текущий результат
-        this.score = document.querySelector('.result__score')
+        this.scoreDisplay = document.querySelector('.result__score')
         // лучший результат
         this.bestScore = document.querySelector('.result__best')
         // скорость игры
         this.speed = document.querySelector('.result__speed')
     }
+    #score = 0;
+    get score(){
+        return this.#score
+    }
+    set score(value){
+        if(value < 0) throw new Error('счет не может уменьшаться')
+        this.#score = value
+    }
+
+
     draw() {
         //отрисовка блока с очками
-        this.score.textContent = `Текущий Счет: ` + this._score;
+        this.scoreDisplay.textContent = `Текущий Счет: ` +  this.score;
+        
 
         //если в localStorage нет данных то в поле лучший результат прописывается ноль
         if (localStorage.getItem('score') === null) {
@@ -274,25 +298,25 @@ class Score {
         //отображение скорости игры
         this.speed.textContent = `Скорость Игры: ` + main.snake.speed;
     }
-    increase() {
+    increase(num) {
         //увеличивать количество очков
         //и перерисовывать табло
-        this._score += 1;
-        if (this._score > localStorage.getItem('score')) {
-            localStorage.setItem('score', this._score)
+        if(num !== 1) throw new Error('счет увеличивается только на 1')
+        this.score += num;
+        if (this.score > localStorage.getItem('score')) {
+            localStorage.setItem('score', this.score)
         }
         this.draw();
     }
     reset() {
         //сброс текущего результата при смерти
-        this._score = 0;
+        this.score = 0;
         this.bestScore += +localStorage.getItem('score')
         this.draw();
     }
 }
 let main = new Main();
 main.score.draw()
-main.apple.draw()
 
 //стрелки на клавиатуре
 document.addEventListener('keydown', function (e) {
@@ -328,3 +352,21 @@ buttonLeft.addEventListener('click', function (e) {
     main.snake.control(e)
 })
 
+//запуск игры при клике на поле
+let start = true //запус только один раз
+main.field.container.addEventListener('click', function (e) {
+    
+    if(start){
+                // скрытие надписи о начале игры
+
+        document.querySelector('.start__game').classList.add("active__game")
+        // передача кода клавиши для запуска движение
+        main.snake.control(e)
+        e.code = 'ArrowUp'
+        // отрисовка первой позиции яблока
+        main.apple.appleStart()
+        // отрисовка змейки
+        main.snake.drawStart()
+        start = false
+    }
+})
